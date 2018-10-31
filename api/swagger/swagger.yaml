@@ -1,0 +1,56 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Album App
+host: localhost:8082
+basePath: /
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /album:
+    x-swagger-router-controller: AlbumController
+    get:
+      description: Returns list of Album
+      operationId: getListOfAlbum
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: object
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /album/{id}:
+    x-swagger-router-controller: AlbumController
+    parameters:
+    - name: id
+      in: path
+      required: true
+      type: string
+    get:
+      description: Returns list of Album by id
+      operationId: getListOfAlbumMusic
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: object
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+definitions:
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
