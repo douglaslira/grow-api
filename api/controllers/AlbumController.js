@@ -1,33 +1,36 @@
 'use strict';
 
 var util = require('util');
+const async = require('asyncawait/async');
+const await = require('asyncawait/await');
+const deezer = require('../../config/deezer');
 
 module.exports = {
     getListOfAlbum: getListOfAlbum,
     getListOfAlbumMusic: getListOfAlbumMusic
 };
 
+const loadAlbumMucis = (id, callback) => {
+    return deezer.album(id, function(error, musics){
+        callback(musics);
+    })
+};
+
 function getListOfAlbumMusic(req, res){
     let id = parseInt(req.swagger.params.id.value);
-    let tempList = [];
-    switch (id) {
-        case 0:
-          tempList = ['A', 'B', 'C'];
-          break;
-        case 1:
-          tempList = ['D', 'E', 'F'];
-          break;
-        case 2:
-          tempList = ['G', 'H', 'I'];
-          break;
-    }
-    res.json({"list": tempList});
+    loadAlbumMucis(id, function(musics){
+        res.json(musics.tracks);
+    });
 }
 
+const loadAlbuns = (id, callback) => {
+    return deezer.artistAlbums(id, function(error, albums) {
+       callback(albums);
+    });
+};
+
 function getListOfAlbum(req, res) {
-  res.json({"list": [
-      {id: 0, title: "Album 01"},
-      {id: 1, title: "Album 02"},
-      {id: 2, title: "Album 01"},
-  ]});
+    loadAlbuns(16124, function(albums){
+        res.json({"list": albums.data});
+    });
 }

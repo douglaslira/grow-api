@@ -8,7 +8,10 @@
   "license": "",
   "main": "app.js",
   "dependencies": {
+    "asyncawait": "^1.0.7",
     "express": "^4.12.3",
+    "http": "0.0.0",
+    "node-deezer": "^0.3.3",
     "swagger-express-mw": "^0.1.0"
   },
   "devDependencies": {
